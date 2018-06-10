@@ -6,7 +6,7 @@ The main language:
 - PHP (5.6.27), HTML, JavaScript
 
 Before run the project, you will need:
-- make sure http raw post data = -1 (PHP.ini) if you are using 5.6 verison of php
+- make sure http raw post data = -1 (PHP.ini) if you are using 5.6 or under verison of php
 
 Usage Document:
 - Main page location:
