@@ -1,0 +1,98 @@
+<html>
+
+<head >
+  <b>Zendesk individual Ticket Viewer</b>
+</head>
+
+<body>
+
+<div id="loader"></div>
+
+<br>
+<br>
+
+<div id="container" style="width:50%;padding: 10px;border: 3px solid gray;margin: 0;">
+
+</div>
+<button style="margin-top:20px;" onclick="location.href = './index.html';">Back Home</button>
+</body>
+
+<script>
+
+var id = localStorage.getItem("id");
+if (id != null && id != undefined){
+  // call php by using XMLHttpRequest
+  var pass_data = {};
+  pass_data.id = id;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         // Action to be performed when the document is read;
+         var all_data = JSON.parse(this.responseText);
+         // disable the loading
+         document.getElementById("loader").style.visibility  = "hidden";
+         // break the line and make it easy to read
+         var br = document.createElement('br');
+         var br2 = document.createElement('br');
+
+         if (all_data.code != "-1"){
+           // show detail here
+           var btn = document.createElement("div");
+           var text = document.createTextNode("Requester Id: " + all_data.ticket.requester_id);
+           var text2 = document.createTextNode("Subject: " + all_data.ticket.subject);
+           var text3 = document.createTextNode("Description: " + all_data.ticket.description);
+
+           btn.appendChild(text);
+           btn.appendChild(br);
+           btn.appendChild(text2);
+           btn.appendChild(br2);
+           btn.appendChild(text3);
+
+           document.getElementById("container").appendChild(btn);
+         } else {
+           // show error handle
+           var btn = document.createElement("div");
+           var text = document.createTextNode(all_data.msg);
+           btn.appendChild(text);
+           document.getElementById("container").appendChild(btn);
+         }
+
+      }
+  };
+  xhttp.open("POST", "../php/fetch_ticket_by_id.php", true);
+  xhttp.send(JSON.stringify(pass_data));
+
+} else {
+  // disable the loading
+  document.getElementById("loader").style.visibility  = "hidden";
+
+  // show error handle
+  var btn = document.createElement("div");
+  var text = document.createTextNode("Requst fail.");
+  btn.appendChild(text);
+  document.getElementById("container").appendChild(btn);
+}
+</script>
+
+<style>
+#loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 20%;
+
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+</style>
+
+</html>
