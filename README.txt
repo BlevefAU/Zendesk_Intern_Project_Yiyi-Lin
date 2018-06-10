@@ -28,5 +28,9 @@ Usage Document:
 - Happy path test:
   - happy_path_test.png
 
+- Zendesk Account:
+ - Username: auitjobsearch@gmail.com
+ - Password: orc8k1k4
+
 Developer By:
 - Yiyi Lin (Bleve)
